@@ -9,8 +9,7 @@ const SingleBlog = () => {
   const blog = blogData.find((b) => b._id === id);
 
   const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(123); // mock likes
-
+  const [likeCount, setLikeCount] = useState(123); 
   const handleLike = () => {
     setLiked(!liked);
     setLikeCount(prev => liked ? prev - 1 : prev + 1);
@@ -25,13 +24,15 @@ const SingleBlog = () => {
     }
   };
 
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:4000"; // Dynamic URL for local or live server
+
   return (
     <div className="max-w-3xl mx-auto p-8 bg-white rounded-lg shadow-xl border border-gray-200 my-10">
       {/* Blog Image */}
       <div className="overflow-hidden rounded-lg mb-6">
         <img
           className="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105"
-          src={`http://localhost:4000/images/${blog.image}`}
+          src={`${API_BASE_URL}/images/${blog.image}`} 
           alt={blog.title}
         />
       </div>
@@ -49,7 +50,7 @@ const SingleBlog = () => {
       <div className="flex items-center gap-4 mt-8">
         <img
           className="w-14 h-14 rounded-full object-cover"
-          src={`http://localhost:4000/images/${blog.author.image}`}
+          src={`${API_BASE_URL}/images/${blog.author.image}`} 
           alt={blog.author.name}
         />
         <div>

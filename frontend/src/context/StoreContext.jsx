@@ -12,17 +12,18 @@ const StoreContextProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const allBolgs = async () => {
+    const allBlogs = async () => {
       try {
-        const res = await axios.get("http://localhost:4000/blog/all");
-
+        const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
+        const res = await axios.get(`${API_BASE_URL}/blog/all`);
         setBlogData(res.data.blogs);
       } catch (error) {
         console.log("error in all blogs api", error);
       }
     };
-    allBolgs();
+    allBlogs();
   }, []);
+  
 
   const loginUser = (user, token) => {
     setUser(user);

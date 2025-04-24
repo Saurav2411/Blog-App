@@ -16,6 +16,8 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false); 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
+
   const onChangeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -35,7 +37,7 @@ const Dashboard = () => {
     data.append("image", formData.image);
 
     try {
-      const res = await axios.post("http://localhost:4000/blog/create", data, {
+      const res = await axios.post(`${API_BASE_URL}/blog/create`, data, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
@@ -53,7 +55,7 @@ const Dashboard = () => {
   useEffect(() => {
     const allBlogs = async () => {
       try {
-        const res = await axios.get("http://localhost:4000/blog/all", {
+        const res = await axios.get(`${API_BASE_URL}/blog/all`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -68,7 +70,7 @@ const Dashboard = () => {
 
   const removeBlog = async (blogId) => {
     try {
-      const res = await axios.delete(`http://localhost:4000/blog/delete/${blogId}`, {
+      const res = await axios.delete(`${API_BASE_URL}/blog/delete/${blogId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -88,7 +90,6 @@ const Dashboard = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
-  // Close sidebar if clicked outside
   const handleClickOutside = (e) => {
     const sidebar = document.getElementById("sidebar");
     if (sidebar && !sidebar.contains(e.target) && !e.target.closest("#toggle-btn")) {
@@ -97,10 +98,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    // Event listener for closing sidebar when clicking outside
     document.addEventListener("click", handleClickOutside);
-
-    // Cleanup listener on component unmount
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
@@ -223,7 +221,7 @@ const Dashboard = () => {
                       <td className="px-4 py-2">{blog.category}</td>
                       <td className="px-4 py-2">
                         <img
-                          src={`http://localhost:4000/images/${blog.image}`}
+                          src={`${API_BASE_URL}/images/${blog.image}`}
                           alt={blog.title}
                           className="w-12 h-12 object-cover rounded-lg"
                         />

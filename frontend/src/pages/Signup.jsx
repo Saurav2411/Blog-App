@@ -29,9 +29,12 @@ const Signup = () => {
       data.append("email", formData.email);
       data.append("password", formData.password);
       data.append("image", formData.image);
+      
       setLoading(true);
+      const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
+      
       const res = await axios.post(
-        "http://localhost:4000/user/register",
+        `${API_BASE_URL}/user/register`, 
         data,
         {
           headers: {
@@ -39,6 +42,7 @@ const Signup = () => {
           },
         }
       );
+      
       if (res.data.success) {
         toast.success(res.data.message);
         navigate("/login");

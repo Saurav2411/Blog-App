@@ -9,12 +9,14 @@ const BlogCard = ({
   author_image,
   date,
 }) => {
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
+
   return (
     <div className="bg-white border border-gray-300 rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl overflow-hidden">
       <Link to={`/blog/${id}`}>
         <div className="relative w-full h-56">
           <img
-            src={`http://localhost:4000/images/${image}`}
+            src={`${API_BASE_URL}/images/${image}`}
             alt={title}
             className="w-[90%] h-full object-cover mx-auto rounded-t-xl transform transition-all duration-300 hover:scale-110"
           />
@@ -33,8 +35,7 @@ const BlogCard = ({
         <div className="flex items-center gap-4 text-gray-600">
           <img
             className="w-12 h-12 rounded-full border-2 border-blue-500"
-            src={`http://localhost:4000/images/${author_image}`}
-            alt={author_name}
+            src={`${API_BASE_URL}/images/${author_image}`} 
           />
           <div>
             <p className="font-semibold">{author_name}</p>
