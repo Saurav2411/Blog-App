@@ -23,7 +23,7 @@ function Blogs() {
           {blogData.map((blog, index) => (
             <BlogCard
               key={index}
-              id={blog.id}
+              id={blog._id}
               title={blog.title}
               image={blog.image}
               category={blog.category}
