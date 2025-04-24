@@ -8,6 +8,10 @@ import {
   userBlogs,
 } from "../controllers/blog.controller.js";
 const router = express.Router();
+router.get("/", (req, res) => {
+  res.send("Blog route root is live 🚀");
+});
+
 router.post("/create", isAuthenticated, upload.single("image"), createBlog);
 router.get("/all", allBlogs);
 router.delete("/delete/:id", isAuthenticated, deleteBlog);
