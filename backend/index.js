@@ -8,16 +8,18 @@ import blogRoutes from "./routes/blog.routes.js";
 dotenv.config();
 const app = express();
 
-// Allow only the frontend to access the backend
+// Allow both production and local frontend access
 const corsOptions = {
-  origin: "https://blog-app-lilac-rho.vercel.app", 
+  origin: [
+    "https://blog-app-lilac-rho.vercel.app",  
+    "http://localhost:5173",  
+  ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 };
 
 app.use(express.json());
 app.use(cors(corsOptions)); 
-
 
 // API ENDPOINTS
 app.use("/images", express.static("uploads"));

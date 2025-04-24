@@ -9,10 +9,10 @@ const SingleBlog = () => {
   const blog = blogData.find((b) => b._id === id);
 
   const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(123); 
+  const [likeCount, setLikeCount] = useState(123);
   const handleLike = () => {
     setLiked(!liked);
-    setLikeCount(prev => liked ? prev - 1 : prev + 1);
+    setLikeCount((prev) => (liked ? prev - 1 : prev + 1));
   };
 
   const handleShare = async () => {
@@ -24,7 +24,16 @@ const SingleBlog = () => {
     }
   };
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:4000"; // Dynamic URL for local or live server
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
+
+  // 🔐 Return if blog not found
+  if (!blog) {
+    return (
+      <div className="max-w-3xl mx-auto p-8 text-center text-red-600 font-semibold">
+        Blog not found.
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-3xl mx-auto p-8 bg-white rounded-lg shadow-xl border border-gray-200 my-10">
@@ -32,7 +41,7 @@ const SingleBlog = () => {
       <div className="overflow-hidden rounded-lg mb-6">
         <img
           className="w-full h-64 object-cover transition-transform duration-300 transform hover:scale-105"
-          src={`${API_BASE_URL}/images/${blog.image}`} 
+          src={`${API_BASE_URL}/images/${blog.image}`}
           alt={blog.title}
         />
       </div>
@@ -48,13 +57,15 @@ const SingleBlog = () => {
 
       {/* Author Info */}
       <div className="flex items-center gap-4 mt-8">
-        <img
-          className="w-14 h-14 rounded-full object-cover"
-          src={`${API_BASE_URL}/images/${blog.author.image}`} 
-          alt={blog.author.name}
-        />
+        {blog.author?.image && (
+          <img
+            className="w-14 h-14 rounded-full object-cover"
+            src={`${API_BASE_URL}/images/${blog.author.image}`}
+            alt={blog.author.name || "Author"}
+          />
+        )}
         <div>
-          <p className="text-lg font-semibold text-gray-900">{blog.author.name}</p>
+          <p className="text-lg font-semibold text-gray-900">{blog.author?.name}</p>
           <p className="text-sm text-gray-500 mt-1">
             Posted on{" "}
             {new Date(blog.createdAt).toLocaleDateString("en-US", {
